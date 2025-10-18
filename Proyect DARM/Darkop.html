@@ -1,0 +1,179 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Darkop</title>
+    <style>
+        :root {
+            --bg: #27292a;
+            --panel: #1f2122;
+            --panel-border: #2f3234;
+            --primary: #00d5ff;
+            --accent: #007878;
+            --text: #e3f8ff;
+        }
+        * { box-sizing: border-box; }
+        body {
+            margin: 0;
+            font-family: Arial, Helvetica, sans-serif;
+            background: var(--bg);
+            color: var(--text);
+            line-height: 1.6;
+        }
+        a { color: var(--primary); text-decoration: none; }
+        a:hover { text-decoration: underline; }
+
+        .header {
+            text-align: center;
+            padding: 32px 16px;
+            background: #1b1d1e;
+            border-bottom: 2px solid #008db8;
+        }
+        .header h1 {
+            margin: 0 0 8px;
+            font-size: 2.2rem;
+            color: var(--primary);
+        }
+        .header p {
+            margin: 0;
+            opacity: 0.9;
+        }
+
+        .container { max-width: 980px; margin: 0 auto; padding: 20px; }
+
+        .card {
+            background: var(--panel);
+            border: 1px solid var(--panel-border);
+            border-radius: 14px;
+            padding: 18px;
+            margin-bottom: 18px;
+            box-shadow: 0 10px 28px rgba(0,0,0,0.25);
+        }
+
+        .grid {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 18px;
+        }
+        @media (min-width: 720px) {
+            .grid { grid-template-columns: 1fr 1fr; }
+        }
+
+        .btn {
+            display: inline-block;
+            background: linear-gradient(135deg, #008db8, #530e9c);
+            color: #fff;
+            border: 0;
+            padding: 10px 16px;
+            border-radius: 10px;
+            cursor: pointer;
+            font-weight: bold;
+            transition: transform .12s ease, box-shadow .12s ease;
+        }
+        .btn:hover {
+            transform: translateY(-1px);
+            box-shadow: 0 6px 16px rgba(0,0,0,.3);
+        }
+        .btn:active { transform: translateY(0); }
+
+        figure { margin: 0; }
+        img { max-width: 100%; height: auto; border-radius: 10px; }
+        figcaption { text-align: center; color: #7fe9ff; margin-top: 8px; }
+
+        .footer {
+            text-align: center;
+            padding: 22px 10px;
+            border-top: 2px solid #008db8;
+            background: #1b1d1e;
+            color: #9defff;
+        }
+        label { color: #a2f3ff; font-weight: bold; }
+        input[type="text"], input[type="email"] {
+            width: 100%;
+            background: #111;
+            color: #d3f7ff;
+            border: 1px solid #3a3d3f;
+            border-radius: 8px;
+            padding: 10px;
+        }
+        input[type="submit"] { margin-top: 4px; }
+        details summary { cursor: pointer; color: var(--primary); }
+        ul { padding-left: 18px; }
+    </style>
+</head>
+<body>
+    <header class="header">
+        <h1>DARM-Z23 · Darkop</h1>
+        <p>Mini página simple al estilo de las otras “fáciles”</p>
+    </header>
+
+    <main class="container">
+        <section class="card">
+            <h2>Bienvenido a Darkop</h2>
+            <p>
+                Esta es una página sencilla con tema oscuro, pensada para mantener el mismo estilo de tus
+                páginas “fáciles”. Incluye una imagen, un video, detalles desplegables, un formulario rápido
+                y enlaces a tus otras páginas.
+            </p>
+            <button class="btn" onclick="alert('¡Hola desde Darkop!')">Probar botón</button>
+        </section>
+
+        <section class="grid">
+            <div class="card">
+                <h3>Imagen</h3>
+                <figure>
+                    <img src="imagen de gato.jpg" alt="Gato" />
+                    <figcaption><i>Gato (imagen local)</i></figcaption>
+                </figure>
+            </div>
+            <div class="card">
+                <h3>Video</h3>
+                <div style="aspect-ratio: 16/9; width: 100%; background: #111; border-radius: 10px; overflow: hidden;">
+                    <iframe width="100%" height="100%" src="https://www.youtube.com/embed/BWMLlvbZVPA" 
+                        title="Video" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen>
+                    </iframe>
+                </div>
+                <p style="margin-top:10px"><a href="https://youtu.be/BWMLlvbZVPA" target="_blank">Abrir en YouTube</a></p>
+            </div>
+        </section>
+
+        <section class="card">
+            <h3>Más información</h3>
+            <details>
+                <summary>Haz clic para ver detalles</summary>
+                <p>
+                    “Las palabras son una hermosa interfaz. Muy flexible. Y menos terrible que contemplar la realidad detrás de la pantalla.”
+                </p>
+            </details>
+        </section>
+
+        <section class="card">
+            <h3>Formulario rápido</h3>
+            <form onsubmit="event.preventDefault(); const n = document.getElementById('nombre').value.trim(); const out = document.getElementById('msg'); out.textContent = '¡Gracias, ' + (n || 'visitante') + '!'; this.reset();">
+                <label for="nombre">Nombre</label>
+                <input type="text" id="nombre" name="nombre" placeholder="Escribe tu nombre" />
+                <br><br>
+                <label for="email">Email</label>
+                <input type="email" id="email" name="email" placeholder="tu@correo.com" />
+                <br><br>
+                <input type="submit" class="btn" value="Enviar" />
+            </form>
+            <p id="msg" style="font-weight: bold; color: var(--primary); margin-top: 10px;"></p>
+        </section>
+
+        <nav class="card">
+            <h3>Navegación</h3>
+            <ul>
+                <li><a href="prot.html">Prototipo</a></li>
+                <li><a href="Navidad.html">Navidad</a></li>
+                <li><a href="Darlog.html">Leyes de Newton</a></li>
+            </ul>
+        </nav>
+    </main>
+
+    <footer class="footer">
+        <small>DARM-Z23 © 2025</small>
+    </footer>
+</body>
+</html>

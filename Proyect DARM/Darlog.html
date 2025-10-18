@@ -1,0 +1,498 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Las 3 Leyes de Newton - Informe Interactivo</title>
+    <style>
+        body {
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            margin: 0;
+            padding: 0;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        .header {
+            text-align: center;
+            color: white;
+            margin-bottom: 40px;
+        }
+
+        .header h1 {
+            font-size: 3rem;
+            margin-bottom: 10px;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+        }
+
+        .header p {
+            font-size: 1.2rem;
+            opacity: 0.9;
+        }
+
+        .law-section {
+            background: white;
+            border-radius: 20px;
+            padding: 30px;
+            margin-bottom: 30px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+            transition: transform 0.3s ease;
+        }
+
+        .law-section:hover {
+            transform: translateY(-5px);
+        }
+
+        .law-header {
+            display: flex;
+            align-items: center;
+            margin-bottom: 25px;
+            padding-bottom: 15px;
+            border-bottom: 3px solid #667eea;
+        }
+
+        .law-number {
+            background: linear-gradient(45deg, #667eea, #764ba2);
+            color: white;
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.5rem;
+            font-weight: bold;
+            margin-right: 20px;
+        }
+
+        .law-title {
+            font-size: 1.8rem;
+            color: #333;
+            margin: 0;
+        }
+
+        .demo-area {
+            background: #f8f9fa;
+            border-radius: 15px;
+            padding: 25px;
+            margin: 20px 0;
+            border: 2px dashed #667eea;
+        }
+
+        .car {
+            width: 80px;
+            height: 40px;
+            background: #ff6b6b;
+            border-radius: 10px;
+            position: relative;
+            margin: 20px 0;
+            transition: all 0.5s ease;
+            cursor: pointer;
+        }
+
+        .car::before {
+            content: '🚗';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            font-size: 2rem;
+        }
+
+        .car.moving {
+            transform: translateX(200px);
+        }
+
+        .car.stopped {
+            background: #feca57;
+        }
+
+        .car.accelerating {
+            background: #48dbfb;
+            animation: shake 0.5s ease-in-out;
+        }
+
+        @keyframes shake {
+            0%, 100% { transform: translateX(0); }
+            25% { transform: translateX(-5px); }
+            75% { transform: translateX(5px); }
+        }
+
+        .force-arrow {
+            width: 0;
+            height: 0;
+            border-left: 20px solid transparent;
+            border-right: 20px solid transparent;
+            border-bottom: 30px solid #ff9ff3;
+            margin: 10px auto;
+            position: relative;
+        }
+
+        .force-arrow::after {
+            content: 'FUERZA';
+            position: absolute;
+            top: 35px;
+            left: -25px;
+            font-size: 0.8rem;
+            font-weight: bold;
+            color: #ff9ff3;
+        }
+
+        .demo-button {
+            background: linear-gradient(45deg, #667eea, #764ba2);
+            color: white;
+            border: none;
+            padding: 12px 25px;
+            border-radius: 25px;
+            cursor: pointer;
+            font-size: 1rem;
+            font-weight: bold;
+            transition: all 0.3s ease;
+            margin: 10px;
+        }
+
+        .demo-button:hover {
+            transform: scale(1.05);
+            box-shadow: 0 5px 15px rgba(102, 126, 234, 0.4);
+        }
+
+        .formula {
+            background: #e8f4fd;
+            border-left: 4px solid #667eea;
+            padding: 15px;
+            margin: 15px 0;
+            border-radius: 5px;
+            font-family: 'Courier New', monospace;
+            font-size: 1.1rem;
+            text-align: center;
+        }
+
+        .example {
+            background: #fff3cd;
+            border: 1px solid #ffeaa7;
+            border-radius: 10px;
+            padding: 20px;
+            margin: 15px 0;
+        }
+
+        .example h4 {
+            color: #856404;
+            margin-top: 0;
+        }
+
+        .collision-demo {
+            display: flex;
+            align-items: center;
+            justify-content: space-around;
+            padding: 20px;
+        }
+
+        .car-left, .car-right {
+            width: 60px;
+            height: 30px;
+            border-radius: 8px;
+            position: relative;
+            transition: all 1s ease;
+        }
+
+        .car-left {
+            background: #ff6b6b;
+        }
+
+        .car-right {
+            background: #4ecdc4;
+        }
+
+        .car-left::before {
+            content: '🚗';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            font-size: 1.5rem;
+        }
+
+        .car-right::before {
+            content: '🚙';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            font-size: 1.5rem;
+        }
+
+        .collision-active .car-left {
+            transform: translateX(50px);
+        }
+
+        .collision-active .car-right {
+            transform: translateX(-50px);
+        }
+
+        .conclusion {
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            color: white;
+            border-radius: 20px;
+            padding: 30px;
+            text-align: center;
+            margin-top: 40px;
+        }
+
+        .conclusion h2 {
+            margin-top: 0;
+            font-size: 2rem;
+        }
+
+        @media (max-width: 768px) {
+            .header h1 {
+                font-size: 2rem;
+            }
+            
+            .law-header {
+                flex-direction: column;
+                text-align: center;
+            }
+            
+            .law-number {
+                margin-right: 0;
+                margin-bottom: 15px;
+            }
+            
+            .collision-demo {
+                flex-direction: column;
+                gap: 20px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>🚗 Las 3 Leyes de Newton 🚗</h1>
+            <p>Descubre los principios fundamentales del movimiento con carros de juguete</p>
+        </div>
+
+        <!-- Primera Ley de Newton -->
+        <div class="law-section">
+            <div class="law-header">
+                <div class="law-number">1</div>
+                <h2 class="law-title">Primera Ley - Ley de Inercia</h2>
+            </div>
+            
+            <p><strong>"Un objeto en reposo permanece en reposo, y un objeto en movimiento permanece en movimiento a velocidad constante, a menos que actúe sobre él una fuerza externa."</strong></p>
+            
+            <div class="formula">
+                ΣF = 0  →  v = constante
+            </div>
+
+            <div class="demo-area">
+                <h4>🎮 Demostración Interactiva:</h4>
+                <p>Haz clic en el botón para ver cómo el carro mantiene su estado:</p>
+                
+                <div id="car1" class="car"></div>
+                
+                <button class="demo-button" onclick="demonstrateLaw1()">Empujar Carro</button>
+                <button class="demo-button" onclick="resetCar1()">Reiniciar</button>
+                
+                <p id="status1" style="font-weight: bold; color: #667eea; margin-top: 15px;">El carro está en reposo y permanecerá así hasta que lo empujes.</p>
+            </div>
+
+            <div class="example">
+                <h4>🚗 Ejemplo con Carros de Juguete:</h4>
+                <p>Cuando empujas un carro de juguete en una mesa lisa, este seguirá rodando hasta que la fricción (fuerza externa) lo detenga. Si no hubiera fricción, ¡el carro rodaría para siempre!</p>
+            </div>
+        </div>
+
+        <!-- Segunda Ley de Newton -->
+        <div class="law-section">
+            <div class="law-header">
+                <div class="law-number">2</div>
+                <h2 class="law-title">Segunda Ley - Ley de Fuerza</h2>
+            </div>
+            
+            <p><strong>"La aceleración de un objeto es directamente proporcional a la fuerza neta aplicada e inversamente proporcional a su masa."</strong></p>
+            
+            <div class="formula">
+                F = m × a
+            </div>
+
+            <div class="demo-area">
+                <h4>🎮 Demostración Interactiva:</h4>
+                <p>Aplica diferentes fuerzas y observa cómo cambia la aceleración:</p>
+                
+                <div class="force-arrow" id="arrow2" style="display: none;"></div>
+                <div id="car2" class="car"></div>
+                
+                <button class="demo-button" onclick="applySmallForce()">Fuerza Pequeña</button>
+                <button class="demo-button" onclick="applyLargeForce()">Fuerza Grande</button>
+                <button class="demo-button" onclick="resetCar2()">Reiniciar</button>
+                
+                <p id="status2" style="font-weight: bold; color: #667eea; margin-top: 15px;">Aplica una fuerza para ver la aceleración del carro.</p>
+            </div>
+
+            <div class="example">
+                <h4>🚗 Ejemplo con Carros de Juguete:</h4>
+                <p>Si empujas un carro ligero y uno pesado con la misma fuerza, el carro ligero se acelerará más rápido. Si quieres que ambos se aceleren igual, necesitas aplicar más fuerza al carro pesado.</p>
+            </div>
+        </div>
+
+        <!-- Tercera Ley de Newton -->
+        <div class="law-section">
+            <div class="law-header">
+                <div class="law-number">3</div>
+                <h2 class="law-title">Tercera Ley - Ley de Acción y Reacción</h2>
+            </div>
+            
+            <p><strong>"Por cada acción hay una reacción igual y opuesta."</strong></p>
+            
+            <div class="formula">
+                F₁ = -F₂
+            </div>
+
+            <div class="demo-area">
+                <h4>🎮 Demostración Interactiva:</h4>
+                <p>Observa cómo los carros se empujan mutuamente en una colisión:</p>
+                
+                <div class="collision-demo" id="collision-demo">
+                    <div class="car-left"></div>
+                    <div style="font-size: 2rem;">💥</div>
+                    <div class="car-right"></div>
+                </div>
+                
+                <button class="demo-button" onclick="demonstrateCollision()">Simular Colisión</button>
+                <button class="demo-button" onclick="resetCollision()">Reiniciar</button>
+                
+                <p id="status3" style="font-weight: bold; color: #667eea; margin-top: 15px;">Los carros ejercen fuerzas iguales y opuestas entre sí durante la colisión.</p>
+            </div>
+
+            <div class="example">
+                <h4>🚗 Ejemplo con Carros de Juguete:</h4>
+                <p>Cuando dos carros de juguete chocan, cada uno ejerce la misma fuerza sobre el otro, pero en direcciones opuestas. Por eso ambos carros se mueven después del choque, aunque en direcciones contrarias.</p>
+            </div>
+        </div>
+
+        <div class="conclusion">
+            <h2>🎯 Conclusión</h2>
+            <p>Las tres leyes de Newton explican todo el movimiento que observamos en nuestros carros de juguete y en el mundo real. Desde el simple empujón hasta las colisiones más complejas, estas leyes fundamentales nos ayudan a entender y predecir cómo se mueven los objetos.</p>
+            <p><strong>¡La física está en todas partes, incluso en nuestros juguetes! 🚗✨</strong></p>
+        </div>
+    </div>
+
+    <script>
+        let car1Moving = false;
+        let car2State = 'rest';
+        let collisionActive = false;
+
+        function demonstrateLaw1() {
+            const car = document.getElementById('car1');
+            const status = document.getElementById('status1');
+            
+            if (!car1Moving) {
+                car.classList.add('moving');
+                car1Moving = true;
+                status.textContent = "¡El carro está en movimiento! Seguirá moviéndose hasta que una fuerza lo detenga.";
+                
+                setTimeout(() => {
+                    car.classList.add('stopped');
+                    status.textContent = "La fricción (fuerza externa) ha detenido el carro. ¡Ley de inercia en acción!";
+                }, 2000);
+            }
+        }
+
+        function resetCar1() {
+            const car = document.getElementById('car1');
+            const status = document.getElementById('status1');
+            
+            car.classList.remove('moving', 'stopped');
+            car1Moving = false;
+            status.textContent = "El carro está en reposo y permanecerá así hasta que lo empujes.";
+        }
+
+        function applySmallForce() {
+            const car = document.getElementById('car2');
+            const arrow = document.getElementById('arrow2');
+            const status = document.getElementById('status2');
+            
+            arrow.style.display = 'block';
+            car.classList.add('accelerating');
+            status.textContent = "Fuerza pequeña = Aceleración pequeña. El carro se mueve lentamente.";
+            
+            setTimeout(() => {
+                car.style.transform = 'translateX(100px)';
+            }, 500);
+            
+            setTimeout(() => {
+                arrow.style.display = 'none';
+                car.classList.remove('accelerating');
+            }, 1000);
+        }
+
+        function applyLargeForce() {
+            const car = document.getElementById('car2');
+            const arrow = document.getElementById('arrow2');
+            const status = document.getElementById('status2');
+            
+            arrow.style.display = 'block';
+            arrow.style.borderBottomColor = '#ff6b6b';
+            car.classList.add('accelerating');
+            car.style.background = '#ff6b6b';
+            status.textContent = "¡Fuerza grande = Aceleración grande! El carro se mueve rápidamente.";
+            
+            setTimeout(() => {
+                car.style.transform = 'translateX(250px)';
+                car.style.transition = 'all 0.3s ease';
+            }, 500);
+            
+            setTimeout(() => {
+                arrow.style.display = 'none';
+                car.classList.remove('accelerating');
+                car.style.transition = 'all 0.5s ease';
+            }, 800);
+        }
+
+        function resetCar2() {
+            const car = document.getElementById('car2');
+            const arrow = document.getElementById('arrow2');
+            const status = document.getElementById('status2');
+            
+            car.style.transform = 'translateX(0)';
+            car.style.background = '#ff6b6b';
+            car.classList.remove('accelerating');
+            arrow.style.display = 'none';
+            arrow.style.borderBottomColor = '#ff9ff3';
+            status.textContent = "Aplica una fuerza para ver la aceleración del carro.";
+        }
+
+        function demonstrateCollision() {
+            const demo = document.getElementById('collision-demo');
+            const status = document.getElementById('status3');
+            
+            if (!collisionActive) {
+                demo.classList.add('collision-active');
+                collisionActive = true;
+                status.textContent = "¡Colisión! Cada carro ejerce la misma fuerza sobre el otro, pero en direcciones opuestas.";
+                
+                setTimeout(() => {
+                    status.textContent = "Acción y reacción: fuerzas iguales y opuestas causaron que ambos carros se movieran.";
+                }, 1500);
+            }
+        }
+
+        function resetCollision() {
+            const demo = document.getElementById('collision-demo');
+            const status = document.getElementById('status3');
+            
+            demo.classList.remove('collision-active');
+            collisionActive = false;
+            status.textContent = "Los carros ejercen fuerzas iguales y opuestas entre sí durante la colisión.";
+        }
+    </script>
+<script>(function(){function c(){var b=a.contentDocument||a.contentWindow.document;if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'984cbe1021963ec6',t:'MTc1ODgyNjU5Ni4wMDAwMDA='};var a=document.createElement('script');a.nonce='';a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script></body>
+</html>

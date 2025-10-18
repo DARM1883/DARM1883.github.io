@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <title>Menus Desplegable Básica</title>
+</head>
+<body>
+
+    <form>
+  <h2>Selecciona un color:</h2>
+
+  <select name="color" title="colores">
+    <option value="rojo">Rojo</option>
+    <option value="verde">Verde</option>
+    <option value="azul">Azul</option>
+  </select>
+
+  <h2>Elige una bebida:</h2>
+
+  <select name="bebida1">
+  <optgroup label="Frías">
+    <option value="agua">Agua</option>
+    <option value="refresco">Refresco</option>
+    <option value="jugo">Jugo</option>
+  </optgroup>
+
+  <optgroup label="Calientes">
+    <option value="cafe">Café</option>
+    <option value="te">Té</option>
+    <option value="chocolate">Chocolate</option>
+  </optgroup>
+</select>
+
+<select name="bebida" multiple>
+  <optgroup label="Frías">
+    <option value="agua">Agua</option>
+    <option value="refresco">Refresco</option>
+    <option value="jugo">Jugo</option>
+  </optgroup>
+
+  <optgroup label="Calientes">
+    <option value="cafe">Café</option>
+    <option value="te">Té</option>
+    <option value="chocolate">Chocolate</option>
+  </optgroup>
+</select>
+
+<select name="bebidas" multiple size="3" required>
+  <optgroup label="Frías">
+    <option value="agua">Agua</option>
+    <option value="refresco">Refresco</option>
+    <option value="jugo">Jugo</option>
+  </optgroup>
+
+  <optgroup label="Calientes">
+    <option value="cafe">Café</option>
+    <option value="te">Té</option>
+    <option value="chocolate">Chocolate</option>
+  </optgroup>
+</select>
+
+<h2>Selecciona tu nivel educativo:</h2>
+
+<select name="nivel" title="Nivel de estudios" disabled>
+  <option value="secundaria">Secundaria</option>
+  <option value="preparatoria">Preparatoria</option>
+  <option value="universidad">Universidad</option>
+</select>
+<br><br>
+
+<h2>Selecciona tu frutas favoritas:</h2>
+<select>
+
+  <option>Pera</option>
+
+  <option>Manzana</option>
+
+  <option>Plátano</option>
+
+</select>
+
+<br><br>
+   <label for="navegador">Escribe tu navegador favorito:</label>
+    <input list="navegadores" id="navegador" name="navegador">
+    <datalist id="navegadores">
+      <option value="Chrome">
+      <option value="Firefox">
+      <option value="Edge">
+      <option value="Safari">
+    </datalist>
+
+    <br><br>
+
+<button type="submit">Enviar</button>
+    </form>
+</body>
+</html>
